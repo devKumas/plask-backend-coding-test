@@ -14,7 +14,7 @@ import { GetUser } from './auth.decorator';
 import { AuthService } from './auth.service';
 import { LoginRequestDto, LoginResponseDto } from './dto/login.dto';
 import { TokenRequestDto, TokenResponseDto } from './dto/token.dto';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { JwtAuthGuard } from './auth.guard';
 
 @ApiTags('인증')
 @Controller('auth')

@@ -18,7 +18,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { GetUser } from 'src/auth/auth.decorator';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { User } from 'src/user/user.entity';
 import {
   CreateShopRequestDto,
