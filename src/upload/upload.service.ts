@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { User } from 'src/user/user.entity';
 
 @Injectable()
 export class UploadService {
-  uploadImage(files: any) {
-    return files.map(({ location }) => {
-      return { location };
+  async uploadImage(user: User, files: any) {
+    return files.map((file) => {
+      return { url: file.location };
     });
   }
 }

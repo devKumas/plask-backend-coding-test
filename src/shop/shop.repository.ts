@@ -11,13 +11,13 @@ export class ShopRepository extends Repository<Shop> {
     return await this.save(shop);
   }
 
-  async findAll(query = '', offset: number) {
+  async findAll(query = '', pagingIndex: number, pagingSize: number) {
     return await this.createQueryBuilder('shop')
       .where('shop.name like :name', { name: `%${query}%` })
       .orderBy('shop.name')
       .addOrderBy('shop.id')
-      .skip(offset)
-      .take(10)
+      .skip(pagingSize * (pagingIndex - 1))
+      .take(pagingSize)
       .getMany();
   }
 

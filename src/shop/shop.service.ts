@@ -19,8 +19,8 @@ export class ShopService {
     return await this.shopRepository.saveShop(createShopRequestDto, user);
   }
 
-  async readShops(query: string, offset: number) {
-    return await this.shopRepository.findAll(query, offset);
+  async readShops(query: string, pagingIndex: number, pagingSize: number) {
+    return await this.shopRepository.findAll(query, pagingIndex, pagingSize);
   }
 
   async readShop(id: number) {
