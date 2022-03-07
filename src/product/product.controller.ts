@@ -103,6 +103,7 @@ export class ProductController {
     name: 'sort',
     description: '정렬 방식',
     required: false,
+    enum: ['price_asc', 'price_desc', 'date', 'rating'],
   })
   @ApiOkResponse({
     description: '성공',

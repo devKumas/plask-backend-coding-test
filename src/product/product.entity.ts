@@ -47,6 +47,9 @@ export class Product extends CoreEntityAndDelete {
   @Column('decimal', { name: 'price' })
   price: number;
 
+  @Column('double', { name: 'rating' })
+  rating: number;
+
   @ManyToOne(() => Shop, (shop) => shop.Products)
   @JoinColumn({ name: 'shop_id' })
   Shop: Shop;

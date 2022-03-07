@@ -6,16 +6,10 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import {
-  ApiBody,
-  ApiCreatedResponse,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/auth/auth.decorator';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { User } from 'src/user/user.entity';
-import { UploadRequestDto } from './dto/upload.dto';
 import { UploadService } from './upload.service';
 
 @ApiTags('파일')
@@ -26,10 +20,6 @@ export class UploadController {
   @ApiOperation({
     summary: '파일 업로드',
     description: '파일을 업로드 합니다.',
-  })
-  @ApiBody({
-    description: '파일업로드',
-    type: UploadRequestDto,
   })
   @ApiCreatedResponse({
     description: '성공',
