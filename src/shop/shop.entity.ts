@@ -5,10 +5,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from 'src/user/user.entity';
+import { Product } from 'src/product/product.entity';
 
 @Entity({ name: 'shops' })
 export class Shop {
@@ -33,4 +35,7 @@ export class Shop {
   @ManyToOne(() => User, (user) => user.Shops)
   @JoinColumn({ name: 'user_id' })
   User: User;
+
+  @OneToMany(() => Product, (product) => product.Shop)
+  Products: Product[];
 }
