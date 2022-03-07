@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiBody,
@@ -53,6 +61,7 @@ export class UserController {
   })
   @ApiNoContentResponse({ description: '성공' })
   @ApiBearerAuth('accessToken')
+  @HttpCode(204)
   @Delete('')
   @UseGuards(JwtAuthGuard)
   deleteUser(@GetUser() user: User) {

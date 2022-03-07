@@ -46,7 +46,7 @@ export class AuthController {
   })
   @ApiNoContentResponse({ description: '성공' })
   @ApiBearerAuth('accessToken')
-  @HttpCode(200)
+  @HttpCode(204)
   @Post('/logout')
   @UseGuards(JwtAuthGuard)
   logout(@GetUser() user: User) {
