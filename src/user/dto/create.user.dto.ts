@@ -86,4 +86,10 @@ export class CreateUserResponseDto {
     description: '수정일',
   })
   updatedAt: string;
+
+  @ApiProperty({
+    example: 'null',
+    description: '삭제일',
+  })
+  deletedAt: string;
 }

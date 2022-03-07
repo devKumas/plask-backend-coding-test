@@ -4,10 +4,12 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import bcrypt from 'bcrypt';
+import { Shop } from '../shop/shop.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -47,4 +49,7 @@ export class User {
   async hashPassword() {
     this.password = await bcrypt.hash(this.password, 10);
   }
+
+  @OneToMany(() => Shop, (shop) => shop.User)
+  Shops: Shop[];
 }
