@@ -4,13 +4,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import Joi from 'joi';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { ShopModule } from './shop/shop.module';
 import { UploadModule } from './upload/upload.module';
 import { User } from './user/user.entity';
 import { Shop } from './shop/shop.entity';
 import { ProductModule } from './product/product.module';
 import { Product } from './product/product.entity';
+import { HttpLoggerMiddleware } from './httpLogger.middleware';
 
 @Module({
   imports: [
@@ -61,6 +61,6 @@ import { Product } from './product/product.entity';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(LoggerMiddleware).forRoutes('*');
+    consumer.apply(HttpLoggerMiddleware).forRoutes('*');
   }
 }

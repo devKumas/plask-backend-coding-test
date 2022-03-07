@@ -3,7 +3,8 @@ import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
-import { UndefinedToNullInterceptor } from './interceptors/undefinedToNull.interceptor';
+import { HttpExceptionFilter } from './httpException.filter';
+import { HttpResponseInterceptor } from './httpResponse.interceptor';
 
 declare const module: any;
 
@@ -36,7 +37,8 @@ async function bootstrap() {
   SwaggerModule.setup('api-docs', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalInterceptors(new UndefinedToNullInterceptor());
+  app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalInterceptors(new HttpResponseInterceptor());
 
   const port = configService.get('PORT');
   await app.listen(port);
