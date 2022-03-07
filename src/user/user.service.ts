@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { x } from 'joi';
 import { CreateUserRequestDto } from './dto/create.user.dto';
 import { UserRepository } from './user.repository';
 
@@ -8,15 +7,15 @@ import { UserRepository } from './user.repository';
 export class UserService {
   constructor(
     @InjectRepository(UserRepository)
-    private usersRepository: UserRepository,
+    private userRepository: UserRepository,
   ) {}
 
   async createUser(createUserRequestDto: CreateUserRequestDto) {
-    return await this.usersRepository.saveUser(createUserRequestDto);
+    return await this.userRepository.saveUser(createUserRequestDto);
   }
 
   async readUserById(id: number, select = false) {
-    const user = await this.usersRepository.findById(id, select);
+    const user = await this.userRepository.findById(id, select);
 
     if (!user) throw new NotFoundException('There is no matching information.');
 
@@ -24,7 +23,7 @@ export class UserService {
   }
 
   async readUserByEmail(email: string, select = false) {
-    const user = await this.usersRepository.findByEmail(email, select);
+    const user = await this.userRepository.findByEmail(email, select);
 
     if (!user) throw new NotFoundException('There is no matching information.');
 
@@ -32,6 +31,8 @@ export class UserService {
   }
 
   async deleteUserById(id: number) {
-    await this.usersRepository.deleteById(id);
+    await this.readUserById(id);
+
+    await this.userRepository.deleteById(id);
   }
 }

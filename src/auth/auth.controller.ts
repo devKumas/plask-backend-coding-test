@@ -2,7 +2,6 @@ import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiBody,
-  ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -12,9 +11,9 @@ import {
 import { User } from 'src/user/user.entity';
 import { GetUser } from './auth.decorator';
 import { AuthService } from './auth.service';
-import { LoginRequestDto, LoginResponseDto } from './dto/login.dto';
-import { TokenRequestDto, TokenResponseDto } from './dto/token.dto';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { LoginRequestDto } from './dto/login.dto';
+import { TokenRequestDto } from './dto/token.dto';
+import { JwtAuthGuard } from './auth.guard';
 
 @ApiTags('인증')
 @Controller('auth')
@@ -28,7 +27,22 @@ export class AuthController {
   @ApiBody({
     type: LoginRequestDto,
   })
-  @ApiOkResponse({ description: '성공', type: LoginResponseDto })
+  @ApiOkResponse({
+    description: '성공',
+    schema: {
+      example: {
+        success: true,
+        statusCode: 201,
+        data: {
+          tokenType: 'bearer',
+          accessToken:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ1c2VyQGRvbWFpbi5jb20iLCJuYW1lIjoi7ZmN6ri464-ZIiwicGhvbmUiOiIwMTAtMDAwMC0wMDAwIiwiaWF0IjoxNjQ2NjcwMTY4LCJleHAiOjE2NDY2NzE5Njh9.Wcld42AkPKwgEf0IZdIMjfGTRJURJfDXeP5K1LNJjDY',
+          refreshToken:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ2NjcwMTY4LCJleHAiOjE2NDcyNzQ5Njh9.-6Z46UA9l3Dzj7iTS4VPpAuI_t2EhvMnFoMK2TTDoWs',
+        },
+      },
+    },
+  })
   @ApiNotFoundResponse({
     description: '이메일이 잘못 되었습니다.',
   })
@@ -44,14 +58,21 @@ export class AuthController {
     summary: '로그아웃',
     description: '저장된 Refresh Token을 삭제합니다.',
   })
-  @ApiNoContentResponse({ description: '성공' })
+  @ApiOkResponse({
+    description: '성공',
+    schema: {
+      example: {
+        success: true,
+        statusCode: 200,
+      },
+    },
+  })
   @ApiBearerAuth('accessToken')
-  @HttpCode(204)
+  @HttpCode(200)
   @Post('/logout')
   @UseGuards(JwtAuthGuard)
   logout(@GetUser() user: User) {
-    this.authService.updateRefreshToken(user);
-    return;
+    return this.authService.logout(user);
   }
 
   @ApiOperation({
@@ -62,7 +83,22 @@ export class AuthController {
   @ApiBody({
     type: TokenRequestDto,
   })
-  @ApiOkResponse({ description: '성공', type: TokenResponseDto })
+  @ApiOkResponse({
+    description: '성공',
+    schema: {
+      example: {
+        success: true,
+        statusCode: 201,
+        data: {
+          tokenType: 'bearer',
+          accessToken:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ1c2VyQGRvbWFpbi5jb20iLCJuYW1lIjoi7ZmN6ri464-ZIiwicGhvbmUiOiIwMTAtMDAwMC0wMDAwIiwiaWF0IjoxNjQ2NjcwNzg4LCJleHAiOjE2NDY2NzI1ODh9.w6NhUqMsmtpbJiH9p-wAUA6_MlHXHGD4c5jUtB3nen4',
+          refhreshToken:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ2NjcwNzg4LCJleHAiOjE2NDcyNzU1ODh9.P0JiS8qeQfhnRka-Myaf6AJvBRPbHMHBH2JPbClEwLE',
+        },
+      },
+    },
+  })
   @ApiUnauthorizedResponse({
     description: '토큰이 잘못 되었습니다.',
   })

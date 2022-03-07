@@ -34,6 +34,14 @@ export class AuthService {
     }
   }
 
+  async logout(user: User) {
+    const { refreshToken } = await this.userService.readUserById(user.id, true);
+
+    if (!refreshToken) throw new UnauthorizedException('not logged in.');
+
+    await this.updateRefreshToken(user, null);
+  }
+
   async updateRefreshToken(user: User, token: string | null = null) {
     user.refreshToken = token;
     return await this.userRepository.save(user);
@@ -45,9 +53,9 @@ export class AuthService {
 
     let newRefhreshToken;
 
-    const user = await this.userRepository.findById(id, true);
+    const user = await this.userService.readUserById(id, true);
 
-    if (!user || user.refreshToken !== refreshToken)
+    if (user.refreshToken !== refreshToken)
       throw new UnauthorizedException('Invalid or Missing JWT token.');
 
     const newAccessToken = this.getJwtAccessToken(user);
