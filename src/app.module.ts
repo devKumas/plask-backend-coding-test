@@ -2,10 +2,13 @@ import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import Joi from 'joi';
-import { join } from 'path';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { ShopModule } from './shop/shop.module';
+import { UploadModule } from './upload/upload.module';
+import { User } from './user/user.entity';
+import { Shop } from './shop/shop.entity';
 
 @Module({
   imports: [
@@ -41,15 +44,16 @@ import { LoggerMiddleware } from './middlewares/logger.middleware';
         username: configService.get('DATABASE_USERNAME'),
         password: configService.get('DATABASE_PASSWORD'),
         database: configService.get('DATABASE_NAME'),
-        entities: [join(__dirname, '/**/*.entity.js')],
-        autoLoadEntities: true,
+        entities: [User, Shop],
         synchronize:
           configService.get('NODE_ENV') === 'development' ? true : false,
-        logging: false,
+        logging: configService.get('NODE_ENV') === 'development' ? true : false,
       }),
     }),
     UserModule,
     AuthModule,
+    ShopModule,
+    UploadModule,
   ],
 })
 export class AppModule {

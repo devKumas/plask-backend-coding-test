@@ -17,6 +17,8 @@ async function bootstrap() {
     .setDescription('The shopping API description')
     .addTag('인증')
     .addTag('사용자')
+    .addTag('파일')
+    .addTag('쇼핑몰')
     .addBearerAuth(
       {
         type: 'http',
