@@ -6,7 +6,12 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { GetUser } from 'src/auth/auth.decorator';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { User } from 'src/user/user.entity';
