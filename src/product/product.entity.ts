@@ -3,6 +3,7 @@ import { Shop } from 'src/shop/shop.entity';
 import { CoreEntityAndDelete } from 'src/core.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, Length } from 'class-validator';
+import { Category } from 'src/category/category.entity';
 
 @Entity({ name: 'products' })
 export class Product extends CoreEntityAndDelete {
@@ -53,4 +54,8 @@ export class Product extends CoreEntityAndDelete {
   @ManyToOne(() => Shop, (shop) => shop.Products)
   @JoinColumn({ name: 'shop_id' })
   Shop: Shop;
+
+  @ManyToOne(() => Category, (category) => category.Products)
+  @JoinColumn({ name: 'category_id' })
+  Category: Category;
 }
