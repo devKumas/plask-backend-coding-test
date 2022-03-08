@@ -117,4 +117,10 @@ _localhost 또는 127.0.0.1을 입력하는 경우 접속되지 않습니다._
 프로젝트 실행후 해당 프로젝트의 모든 기능들은 아래의 링크에서 확인할 수 있습니다.
 
 - [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
-  ![](./images/5.png)
+
+![](./images/5.png)
+
+### 변경점
+
+- AccessToken및 RefreshToken 사용
+- Product 조회 기능 필터에서 평점순 조회를 위해 상품등록시 랜덤으로 평점 등록
