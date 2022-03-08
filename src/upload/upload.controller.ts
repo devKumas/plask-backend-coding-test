@@ -35,6 +35,7 @@ export class UploadController {
       },
     },
   })
+  @ApiBearerAuth('accessToken')
   @Post('')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(FilesInterceptor('files', 10))
