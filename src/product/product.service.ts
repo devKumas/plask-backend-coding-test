@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CategoryService } from 'src/category/category.service';
 import { ShopService } from 'src/shop/shop.service';
 import { User } from 'src/user/user.entity';
 import { CreateProductRequestDto } from './dto/create.product.dto';
@@ -11,6 +12,7 @@ export class ProductService {
     @InjectRepository(ProductRepository)
     private productRepository: ProductRepository,
     private shopService: ShopService,
+    private categoryService: CategoryService,
   ) {}
 
   async createProduct(
@@ -20,7 +22,17 @@ export class ProductService {
   ) {
     const shop = await this.shopService.validateShop(shopId, user);
 
-    return this.productRepository.saveProduct(createProductRequestDto, shop);
+    const { category: categoryId } = createProductRequestDto;
+
+    let category;
+    if (categoryId)
+      category = await this.categoryService.readCategory(categoryId, shopId);
+
+    return this.productRepository.saveProduct(
+      createProductRequestDto,
+      shop,
+      category,
+    );
   }
 
   async readProducts(
@@ -28,12 +40,15 @@ export class ProductService {
     pagingIndex: number,
     pagingSize: number,
     sort: string,
+    categoryId: number,
   ) {
+    if (pagingSize > 40) pagingSize = 40;
     return await this.productRepository.findAll(
       shopId,
       pagingIndex,
       pagingSize,
       sort,
+      categoryId,
     );
   }
 

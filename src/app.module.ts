@@ -11,6 +11,8 @@ import { Shop } from './shop/shop.entity';
 import { ProductModule } from './product/product.module';
 import { Product } from './product/product.entity';
 import { HttpLoggerMiddleware } from './httpLogger.middleware';
+import { CategoryModule } from './category/category.module';
+import { Category } from './category/category.entity';
 
 @Module({
   imports: [
@@ -46,7 +48,7 @@ import { HttpLoggerMiddleware } from './httpLogger.middleware';
         username: configService.get('DATABASE_USERNAME'),
         password: configService.get('DATABASE_PASSWORD'),
         database: configService.get('DATABASE_NAME'),
-        entities: [User, Shop, Product],
+        entities: [User, Shop, Product, Category],
         synchronize:
           configService.get('NODE_ENV') === 'development' ? true : false,
         logging: configService.get('NODE_ENV') === 'development' ? true : false,
@@ -57,6 +59,7 @@ import { HttpLoggerMiddleware } from './httpLogger.middleware';
     ShopModule,
     UploadModule,
     ProductModule,
+    CategoryModule,
   ],
 })
 export class AppModule {

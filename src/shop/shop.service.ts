@@ -20,6 +20,7 @@ export class ShopService {
   }
 
   async readShops(query: string, pagingIndex: number, pagingSize: number) {
+    if (pagingSize > 20) pagingSize = 20;
     return await this.shopRepository.findAll(query, pagingIndex, pagingSize);
   }
 
