@@ -4,6 +4,7 @@ import { Product } from 'src/product/product.entity';
 import { CoreEntityAndDelete } from 'src/core.entity';
 import { Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Category } from 'src/category/category.entity';
 
 @Entity({ name: 'shops' })
 export class Shop extends CoreEntityAndDelete {
@@ -30,4 +31,7 @@ export class Shop extends CoreEntityAndDelete {
 
   @OneToMany(() => Product, (product) => product.Shop)
   Products: Product[];
+
+  @OneToMany(() => Category, (category) => category.Shop)
+  Categories: Category[];
 }
