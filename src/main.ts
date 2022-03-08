@@ -20,6 +20,8 @@ async function bootstrap() {
     .addTag('사용자')
     .addTag('파일')
     .addTag('쇼핑몰')
+    .addTag('상품')
+    .addTag('분류')
     .addBearerAuth(
       {
         type: 'http',

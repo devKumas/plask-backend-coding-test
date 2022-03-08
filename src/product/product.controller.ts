@@ -66,6 +66,10 @@ export class ProductController {
               phone: '010-0000-0000',
             },
           },
+          Category: {
+            id: 1,
+            name: '남성',
+          },
         },
       },
     },
@@ -90,6 +94,11 @@ export class ProductController {
     description: '쇼핑몰에 등록된 모든 상품을 조회합니다.',
   })
   @ApiQuery({
+    name: 'categoryId',
+    description: '카테고리 id 기본값: 전체',
+    required: false,
+  })
+  @ApiQuery({
     name: 'pagingIndex',
     description: '페이지 번호 기본값: 1 ',
     required: false,
@@ -101,7 +110,7 @@ export class ProductController {
   })
   @ApiQuery({
     name: 'sort',
-    description: '정렬 방식',
+    description: '정렬 방식 기본값: price_asc',
     required: false,
     enum: ['price_asc', 'price_desc', 'date', 'rating'],
   })
@@ -127,18 +136,23 @@ export class ProductController {
   })
   @Get(':shopId/products')
   readProducts(
-    @Param('shopId', ParseIntPipe) shopId: number,
+    @Param('shopId', ParseIntPipe)
+    shopId: number,
+    @Query('categoryId', new DefaultValuePipe(0), ParseIntPipe)
+    categoryId: number,
     @Query('pagingIndex', new DefaultValuePipe(1), ParseIntPipe)
     pagingIndex: number,
     @Query('pagingSize', new DefaultValuePipe(10), ParseIntPipe)
     pagingSize: number,
-    @Query('sort') sort: string,
+    @Query('sort')
+    sort: string,
   ) {
     return this.productService.readProducts(
       shopId,
       pagingIndex,
       pagingSize,
       sort,
+      categoryId,
     );
   }
 
@@ -171,6 +185,10 @@ export class ProductController {
               phone: '010-0000-0000',
             },
           },
+          Category: {
+            id: 1,
+            name: '남성',
+          },
         },
       },
     },
@@ -178,8 +196,8 @@ export class ProductController {
   @ApiNotFoundResponse({ description: '상품을 찾을 수 없습니다' })
   @Get(':shopId/products/:productId')
   readProduct(
-    @Param('productId', ParseIntPipe) productId: number,
     @Param('shopId', ParseIntPipe) shopId: number,
+    @Param('productId', ParseIntPipe) productId: number,
   ) {
     return this.productService.readProduct(productId, shopId);
   }
