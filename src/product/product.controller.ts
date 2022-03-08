@@ -143,7 +143,7 @@ export class ProductController {
   }
 
   @ApiOperation({
-    summary: '쇼핑몰 상품 조회',
+    summary: '쇼핑몰 상품 상세 조회',
     description: '상품의 상세정보를 확인합니다.',
   })
   @ApiOkResponse({
