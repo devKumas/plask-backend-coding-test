@@ -79,7 +79,7 @@ export class ShopController {
   })
   @ApiQuery({
     name: 'pagingSize',
-    description: '한 페이지에 보여줄 갯수 기본값: 10',
+    description: '한 페이지에 보여줄 갯수 기본값: 10, 최대값: 20',
     required: false,
   })
   @ApiOkResponse({

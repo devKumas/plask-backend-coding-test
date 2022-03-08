@@ -29,6 +29,7 @@ export class ProductService {
     pagingSize: number,
     sort: string,
   ) {
+    if (pagingSize > 40) pagingSize = 40;
     return await this.productRepository.findAll(
       shopId,
       pagingIndex,
