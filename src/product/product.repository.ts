@@ -11,6 +11,7 @@ export class ProductRepository extends Repository<Product> {
   ) {
     const product = this.create(createProductRequestDto);
     product.Shop = shop;
+    product.rating = Math.floor(Math.random() * 50) / 10;
     return await this.save(product);
   }
 
@@ -32,6 +33,7 @@ export class ProductRepository extends Repository<Product> {
         break;
       case 'rating':
         orderByColumn = 'product.rating';
+        orderBySort = 'DESC';
         break;
     }
     return await this.createQueryBuilder('product')
