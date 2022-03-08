@@ -30,7 +30,7 @@ mysql> CREATE DATABASE `shopping-app` DEFAULT CHARACTER SET = `utf8mb4` DEFAULT 
 환경변수를 수정하는것만으로 S3와 호환되며 코드의 변경없이 사용할 수 있습니다.
 minio는 해당 프로젝트의 docker-compose.yml을 이용하여 실행할 수 있습니다.
 
-##### 설치
+##### 설치 및 실행
 
 ```bash
 $ docker-compose -up
@@ -49,11 +49,12 @@ $ docker-compose -up
 ![](./images/2.png)
 ![](./images/3.png)
 ![](./images/4.png)
+
 다음과 같이 이동한뒤 버킷을 생성합니다.
 
 #### 환경 변수 설정
 
-개발환경과 배포환경에서 사용되는 .env 파일을 따로 관리됩니다.
+개발환경과 배포환경에서 사용되는 .env 파일을 개별의 파일로 관리됩니다.
 각 환경에서 사용되는 파일의 이름은 다음과 같습니다.
 
 - 개발환경 .env.development
@@ -88,7 +89,7 @@ AWS_REGION=AWS S3 지역
 AWS_END_POINT=로컬환경에서 사용시 minio IP
 ```
 
-_minio 사용시 END POINT는 자신의 아이피:9000 입니다._
+_minio 사용시 END POINT는 자신의 아이피:9000 입니다._  
 _localhost 또는 127.0.0.1을 입력하는 경우 접속되지 않습니다._
 
 ## 프로젝트 실행
